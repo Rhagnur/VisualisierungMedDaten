@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Text;
 
 namespace WindowsFormsApplication1
 {
@@ -47,26 +48,28 @@ namespace WindowsFormsApplication1
                 {
                     BinaryReader reader = new BinaryReader(fs);
 
-                    ushort g;
-                    ushort e;
+                    ushort subTag1, subTag2;
                     string tagID;
-                    while (fs.Length > fs.Position)
+                    Console.WriteLine(fs.Length);
+                    while (fs.Position < fs.Length)
                     {
-                        g = reader.ReadUInt16();
-                        e = reader.ReadUInt16();
-                        tagID = g.ToString("X4") + e.ToString("X4");
+                        subTag1 = reader.ReadUInt16();
+                        subTag2 = reader.ReadUInt16();
+                        tagID = subTag1.ToString("X4") + subTag2.ToString("X4");
 
                         long length;
                         length = reader.ReadUInt32();
+                        
 
                         byte[] val = reader.ReadBytes((int)length);
                         dicomMap.Add(tagID, val);
 
-                        if (dicomMap.ContainsKey(tagID))
+                        //Debugausgabe, Pixeldata für eigentliches Bild wird aus offensichtlichen Gründen rausgelassen
+                        if (length < 60)
                         {
-                            byte[] values = dicomMap[tagID];
+                            Console.WriteLine(tagID + " : " + length + " - " + Encoding.Default.GetString(val));
                         }
-
+                        
                     }
 
                     fs.Close();

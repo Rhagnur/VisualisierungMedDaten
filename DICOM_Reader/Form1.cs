@@ -16,7 +16,7 @@ namespace WindowsFormsApplication1
         private DicomService myService = new DicomService();
         private Dictionary<string, string> myDict = new Dictionary<string, string>();
         private Dictionary<string, byte[]> myMap = new Dictionary<string, byte[]>();
-        private int rows, columns, bitsAllocates, bitsStored, highBit;
+        private int rows, columns;
         public int wValue, cValue;
 
         private byte[] pixelData;
@@ -33,9 +33,6 @@ namespace WindowsFormsApplication1
             //Set necessary informations
             rows = BitConverter.ToInt16(myMap["00280010"], 0);
             columns = BitConverter.ToInt16(myMap["00280011"], 0);
-            bitsAllocates = BitConverter.ToInt16(myMap["00280100"], 0);
-            bitsStored = BitConverter.ToInt16(myMap["00280101"], 0);
-            highBit = BitConverter.ToInt16(myMap["00280102"], 0);
             pixelData = myMap["7FE00010"];
 
             //Get all keys and theyr associated values
@@ -53,11 +50,11 @@ namespace WindowsFormsApplication1
                     item = new ListViewItem(id);
                 }
 
-                item.SubItems.Add(Encoding.ASCII.GetString(value));
+                item.SubItems.Add(Encoding.Default.GetString(value));
                 listView1.Items.Add(item);
             }
 
-            pictureBox1.Image = myService.createPicture(rows, columns, bitsAllocates, bitsStored, highBit, pixelData, trackBarC.Value, trackBarW.Value);
+            pictureBox1.Image = myService.createPicture(rows, columns, pixelData, trackBarC.Value, trackBarW.Value);
 
         }
 
@@ -65,12 +62,12 @@ namespace WindowsFormsApplication1
         //Events for the form
         private void trackBarC_Scroll(object sender, EventArgs e)
         {
-            pictureBox1.Image = myService.createPicture(rows, columns, bitsAllocates, bitsStored, highBit, pixelData, trackBarC.Value, trackBarW.Value);
+            pictureBox1.Image = myService.createPicture(rows, columns, pixelData, trackBarC.Value, trackBarW.Value);
         }
 
         private void trackBarW_Scroll(object sender, EventArgs e)
         {
-            pictureBox1.Image = myService.createPicture(rows, columns, bitsAllocates, bitsStored, highBit, pixelData, trackBarC.Value, trackBarW.Value);
+            pictureBox1.Image = myService.createPicture(rows, columns, pixelData, trackBarC.Value, trackBarW.Value);
         }
 
         private void Form1_Load(object sender, EventArgs e)

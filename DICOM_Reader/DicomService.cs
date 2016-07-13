@@ -10,32 +10,19 @@ namespace WindowsFormsApplication1
 {
     class DicomService
     {
-        private int cValue, wValue;
 
-        public Bitmap createPicture(int rows, int columns, int bitsAllocates, int bitsStored, int highBit, byte[] pixelData, int cValue, int wValue)
-        {
-            if (bitsAllocates == 16)
-            {
-                this.cValue = cValue;
-                this.wValue = wValue;
-                return createPicture16(rows, columns, bitsAllocates, bitsStored, highBit, pixelData);
-            }
-            return null;
-        }
-
-        private Bitmap createPicture16(int rows, int columns, int bitsAllocates, int bitsStored, int highBit, byte[] pixelData)
+        //only for this purpose...with 16 bits allocted
+        public Bitmap createPicture(int rows, int columns, byte[] pixelData, int cValue, int wValue)
         {
             Bitmap picture = new Bitmap(columns, rows);
             int counter = 0;
             int colorValue;
             Color color;
 
-            int center = cValue;
-            int width = wValue;
-            double min = center - (width/2);
-            double max = center + (width/2);
-            double n = (255 * min) / (max - min) * (-1);
-            double m = 255 / (max - min);
+            double min = cValue - (wValue / 2);
+            double max = cValue + (wValue / 2);
+            //double n = (255 * min) / (max - min) * (-1);
+            //double m = 255 / (max - min);
 
             for (int y = 0; y < rows; y++)
             {
@@ -52,7 +39,8 @@ namespace WindowsFormsApplication1
                         colorValue = 255;
                     }
                     else {
-                        colorValue = (int) (m * colorValue + n);
+                        //colorValue = (int) (m * colorValue + n);
+                        colorValue = (int)((colorValue - min) * (255 / (max - min)));
                     }
 
                     //Switch color black to white
