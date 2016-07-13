@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Text;
@@ -32,7 +30,7 @@ namespace WindowsFormsApplication1
                 Application.Run(new Form1(dicomMap));
             } else
             {
-                Console.WriteLine("\nError: While trying to open '"+FileWithPath + "' No such file!");
+                Console.WriteLine("\nError: While trying to open '"+FileWithPath + "' No such file or file corrupt!");
                 Console.WriteLine("Please press any key to exit!");
                 Console.ReadKey();
             }
