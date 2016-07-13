@@ -48,14 +48,12 @@ namespace WindowsFormsApplication1
                 {
                     BinaryReader reader = new BinaryReader(fs);
 
-                    ushort subTag1, subTag2;
-                    string tagID;
                     Console.WriteLine(fs.Length);
                     while (fs.Position < fs.Length)
                     {
-                        subTag1 = reader.ReadUInt16();
-                        subTag2 = reader.ReadUInt16();
-                        tagID = subTag1.ToString("X4") + subTag2.ToString("X4");
+                        ushort subTag1 = reader.ReadUInt16();
+                        ushort subTag2 = reader.ReadUInt16();
+                        string tagID = subTag1.ToString("X4") + subTag2.ToString("X4");
 
                         long length;
                         length = reader.ReadUInt32();
