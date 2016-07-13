@@ -64,7 +64,7 @@ namespace WindowsFormsApplication1
                         byte[] val = reader.ReadBytes((int)length);
                         dicomMap.Add(tagID, val);
 
-                        //Debugausgabe, Pixeldata für eigentliches Bild wird aus offensichtlichen Gründen rausgelassen
+                        //Debugausgabe, for all tags except pixeldata for obv. reasons
                         if (length < 60)
                         {
                             Console.WriteLine(tagID + " : " + length + " - " + Encoding.Default.GetString(val));

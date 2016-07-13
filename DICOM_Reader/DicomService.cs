@@ -19,10 +19,8 @@ namespace WindowsFormsApplication1
             int colorValue;
             Color color;
 
-            double min = cValue - (wValue / 2);
-            double max = cValue + (wValue / 2);
-            //double n = (255 * min) / (max - min) * (-1);
-            //double m = 255 / (max - min);
+            double min = cValue - 0.5 - ((wValue -1 ) / 2);
+            double max = cValue + ((wValue - 1) / 2);
 
             for (int y = 0; y < rows; y++)
             {
@@ -32,14 +30,13 @@ namespace WindowsFormsApplication1
                     colorValue = BitConverter.ToInt16(pixelData, counter);
   
                     //check if maybe one color value is out of range and adjust it
-                    if (colorValue < min) {
+                    if (colorValue <= min) {
                         colorValue = 0;
                     }
                     else if (colorValue > max) {
                         colorValue = 255;
                     }
                     else {
-                        //colorValue = (int) (m * colorValue + n);
                         colorValue = (int)((colorValue - min) * (255 / (max - min)));
                     }
 
